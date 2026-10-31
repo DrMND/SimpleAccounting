@@ -20,18 +20,6 @@ namespace SimpleAccounting.Models
         // Добавь этот метод
         public void CreateTestUsers()
         {
-            // Администратор
-            if (!Users.Any(u => u.Login == "admin"))
-            {
-                Users.Add(new User
-                {
-                    Login = "admin",
-                    Password = "123",
-                    FullName = "Администратор Системы",
-                    Role = "Администратор"
-                });
-            }
-
             // Бухгалтер
             if (!Users.Any(u => u.Login == "buh"))
             {
