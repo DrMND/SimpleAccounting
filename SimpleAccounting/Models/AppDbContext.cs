@@ -15,6 +15,8 @@ namespace SimpleAccounting.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Tax> Taxes { get; set; }
+        public DbSet<User> Users { get; set; }
+
 
         // Метод настройки подключения к базе данных
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
