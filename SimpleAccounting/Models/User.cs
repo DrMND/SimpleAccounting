@@ -17,6 +17,9 @@ namespace SimpleAccounting.Models
         // Пароль (в учебном проекте храним строкой, для простоты)
         public string Password { get; set; } = string.Empty;
 
+        // Имя пользователя (ФИО)
+        public string FullName { get; set; } = "Пользователь";
+
         // Роль пользователя: Администратор, Бухгалтер, Директор
         public string Role { get; set; } = string.Empty;
     }

@@ -1,12 +1,116 @@
-﻿<Window x:Class="SimpleAccounting.MainWindow"
+﻿<Window x:Class="SimpleAccounting.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SimpleAccounting"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Бухгалтерия малого предприятия" 
+        Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
 
+    <Window.Resources>
+        <!-- Стиль для кнопок меню -->
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="20,15"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#9575CD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#5E35B1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Боковое меню -->
+        <Border Grid.Column="0" Background="#7E57C2">
+            <StackPanel Margin="0,20,0,0">
+                <!-- Логотип/Заголовок -->
+                <TextBlock Text="📊 Учёт" 
+                           FontSize="24" 
+                           FontWeight="Bold"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,30"/>
+
+                <!-- Кнопки меню -->
+                <Button Content="📦 Товары" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Products_Click"/>
+
+                <Button Content="👥 Клиенты" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Clients_Click"/>
+
+                <Button Content="👨‍💼 Сотрудники" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Employees_Click"/>
+
+                <Separator Margin="10,20" Background="White" Opacity="0.3"/>
+
+                <Button Content="📄 Продажи" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Sales_Click"/>
+
+                <Button Content="💰 Расходы" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Expenses_Click"/>
+
+                <Separator Margin="10,20" Background="White" Opacity="0.3"/>
+
+                <Button Content="📊 Отчёты" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Reports_Click"/>
+
+                <!-- Кнопка выхода -->
+                <Button Content="🚪 Выйти" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="10,20,10,10"
+                        Click="Logout_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Основная область -->
+        <Border Grid.Column="1" Background="{DynamicResource MaterialDesignPaper}">
+            <Grid Margin="30">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Добро пожаловать в систему учёта!" 
+                               FontSize="32" 
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+                    <TextBlock Text="Выберите раздел в меню слева" 
+                               FontSize="18" 
+                               Foreground="Gray"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
