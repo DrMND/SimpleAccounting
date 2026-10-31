@@ -1,13 +1,4 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using SimpleAccounting.Models;
 
 namespace SimpleAccounting.Views
@@ -22,14 +13,36 @@ namespace SimpleAccounting.Views
             InitializeComponent();
             _dbContext = dbContext;
             _currentUser = user;
-            Title = $"Бухгалтерия малого предприятия — {_currentUser.FullName}";
+            Title = $"Бухгалтерия малого предприятия — {user.FullName} ({user.Role})";
+
+            // Устанавливаем приветствие
+            WelcomeText.Text = $"{user.FullName}";
+
+            // Настраиваем видимость кнопок в зависимости от роли
+            SetupRoleBasedUI();
         }
 
         // Пустой конструктор для Designer
-        public MainWindow() : this(new AppDbContext(), new User { FullName = "Пользователь" })
+        public MainWindow() : this(new AppDbContext(), new User { FullName = "Пользователь", Role = "Директор" })
         {
         }
 
+        private void SetupRoleBasedUI()
+        {
+            string role = _currentUser.Role;
+
+            if (role == "Бухгалтер")
+            {
+                // Бухгалтер НЕ видит управление пользователями
+                UsersButton.Visibility = Visibility.Collapsed;
+            }
+            else if (role == "Директор")
+            {
+                // Директор видит всё (супер-админ)
+            }
+        }
+
+        // Обработчики кнопок
         private void Products_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Раздел 'Товары' будет здесь", "Информация");
@@ -40,19 +53,24 @@ namespace SimpleAccounting.Views
             MessageBox.Show("Раздел 'Клиенты' будет здесь", "Информация");
         }
 
-        private void Employees_Click(object sender, RoutedEventArgs e)
+        private void Users_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Раздел 'Сотрудники' будет здесь", "Информация");
+            MessageBox.Show("Раздел 'Пользователи' будет здесь", "Информация");
         }
 
-        private void Sales_Click(object sender, RoutedEventArgs e)
+        private void Income_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Раздел 'Продажи' будет здесь", "Информация");
+            MessageBox.Show("Раздел 'Доходы' будет здесь", "Информация");
         }
 
         private void Expenses_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Раздел 'Расходы' будет здесь", "Информация");
+        }
+
+        private void Invoices_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Раздел 'Счета' будет здесь", "Информация");
         }
 
         private void Reports_Click(object sender, RoutedEventArgs e)

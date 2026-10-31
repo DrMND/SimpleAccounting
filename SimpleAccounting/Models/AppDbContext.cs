@@ -18,20 +18,45 @@ namespace SimpleAccounting.Models
         }
 
         // Добавь этот метод
-        public void CreateTestUser()
+        public void CreateTestUsers()
         {
-            // Проверяем, есть ли уже пользователи
-            if (!Users.Any())
+            // Администратор
+            if (!Users.Any(u => u.Login == "admin"))
             {
                 Users.Add(new User
                 {
                     Login = "admin",
                     Password = "123",
-                    FullName = "Администратор",
-                    Role = "Admin"
+                    FullName = "Администратор Системы",
+                    Role = "Администратор"
                 });
-                SaveChanges();
             }
+
+            // Бухгалтер
+            if (!Users.Any(u => u.Login == "buh"))
+            {
+                Users.Add(new User
+                {
+                    Login = "buh",
+                    Password = "123",
+                    FullName = "Иванова Мария Петровна",
+                    Role = "Бухгалтер"
+                });
+            }
+
+            // Директор
+            if (!Users.Any(u => u.Login == "director"))
+            {
+                Users.Add(new User
+                {
+                    Login = "director",
+                    Password = "123",
+                    FullName = "Петров Алексей Сергеевич",
+                    Role = "Директор"
+                });
+            }
+
+            SaveChanges();
         }
     }
 }

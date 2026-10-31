@@ -16,7 +16,7 @@ namespace SimpleAccounting.Views
             _dbContext = new AppDbContext();
 
             // Создаем тестового пользователя (если таблица пустая)
-            _dbContext.CreateTestUser();
+            _dbContext.CreateTestUsers();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

@@ -59,37 +59,66 @@
                            HorizontalAlignment="Center"
                            Margin="0,0,0,30"/>
 
-                <!-- Кнопки меню -->
-                <Button Content="📦 Товары" 
+                <!-- Блок «База данных» -->
+                <TextBlock Text="БАЗА ДАННЫХ" 
+                           FontSize="12" 
+                           FontWeight="Bold"
+                           Foreground="White"
+                           Opacity="0.7"
+                           Margin="20,0,0,10"/>
+
+                <Button x:Name="ProductsButton" Content="📦 Товары" 
                         Style="{StaticResource MenuButtonStyle}"
                         Click="Products_Click"/>
 
-                <Button Content="👥 Клиенты" 
+                <Button x:Name="ClientsButton" Content="👥 Клиенты" 
                         Style="{StaticResource MenuButtonStyle}"
                         Click="Clients_Click"/>
 
-                <Button Content="👨‍💼 Сотрудники" 
+                <Button x:Name="UsersButton" Content="👤 Пользователи" 
                         Style="{StaticResource MenuButtonStyle}"
-                        Click="Employees_Click"/>
+                        Click="Users_Click"/>
 
-                <Separator Margin="10,20" Background="White" Opacity="0.3"/>
+                <!-- Разделитель -->
+                <Separator x:Name="Separator1" Margin="10,20" Background="White" Opacity="0.3"/>
 
-                <Button Content="📄 Продажи" 
+                <!-- Блок «Операционка» -->
+                <TextBlock Text="ОПЕРАЦИОНКА" 
+                           FontSize="12" 
+                           FontWeight="Bold"
+                           Foreground="White"
+                           Opacity="0.7"
+                           Margin="20,0,0,10"/>
+
+                <Button x:Name="IncomeButton" Content="📈 Доходы" 
                         Style="{StaticResource MenuButtonStyle}"
-                        Click="Sales_Click"/>
+                        Click="Income_Click"/>
 
-                <Button Content="💰 Расходы" 
+                <Button x:Name="ExpensesButton" Content="📉 Расходы" 
                         Style="{StaticResource MenuButtonStyle}"
                         Click="Expenses_Click"/>
 
-                <Separator Margin="10,20" Background="White" Opacity="0.3"/>
+                <Button x:Name="InvoicesButton" Content="🧾 Счета" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Invoices_Click"/>
 
-                <Button Content="📊 Отчёты" 
+                <!-- Разделитель -->
+                <Separator x:Name="Separator2" Margin="10,20" Background="White" Opacity="0.3"/>
+
+                <!-- Блок «Аналитика» -->
+                <TextBlock Text="АНАЛИТИКА" 
+                           FontSize="12" 
+                           FontWeight="Bold"
+                           Foreground="White"
+                           Opacity="0.7"
+                           Margin="20,0,0,10"/>
+
+                <Button x:Name="ReportsButton" Content="📊 Отчёты" 
                         Style="{StaticResource MenuButtonStyle}"
                         Click="Reports_Click"/>
 
                 <!-- Кнопка выхода -->
-                <Button Content="🚪 Выйти" 
+                <Button x:Name="LogoutButton" Content="🚪 Выйти" 
                         Style="{StaticResource MenuButtonStyle}"
                         Margin="10,20,10,10"
                         Click="Logout_Click"/>
@@ -104,7 +133,15 @@
                                FontSize="32" 
                                FontWeight="Bold"
                                HorizontalAlignment="Center"
+                               Margin="0,0,0,10"/>
+
+                    <!-- Приветствие с именем пользователя -->
+                    <TextBlock x:Name="WelcomeText" 
+                               FontSize="24" 
+                               Foreground="#7E57C2"
+                               HorizontalAlignment="Center"
                                Margin="0,0,0,20"/>
+
                     <TextBlock Text="Выберите раздел в меню слева" 
                                FontSize="18" 
                                Foreground="Gray"
