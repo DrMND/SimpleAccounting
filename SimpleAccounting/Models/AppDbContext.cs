@@ -11,16 +11,16 @@ namespace SimpleAccounting.Models
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Tax> Taxes { get; set; }
         public DbSet<User> Users { get; set; }
+                public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=accounting.db");
         }
 
-        // Добавь этот метод
         public void CreateTestUsers()
         {
-            // Бухгалтер
             if (!Users.Any(u => u.Login == "buh"))
             {
                 Users.Add(new User
@@ -32,7 +32,6 @@ namespace SimpleAccounting.Models
                 });
             }
 
-            // Директор
             if (!Users.Any(u => u.Login == "director"))
             {
                 Users.Add(new User

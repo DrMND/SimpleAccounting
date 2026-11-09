@@ -52,6 +52,10 @@ namespace SimpleAccounting.Views
         {
             MessageBox.Show("Раздел 'Клиенты' будет здесь", "Информация");
         }
+        private void Employees_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Раздел 'Сотрудники' будет здесь", "Информация");
+        }
 
         private void Users_Click(object sender, RoutedEventArgs e)
         {
