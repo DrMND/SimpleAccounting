@@ -62,22 +62,22 @@ namespace SimpleAccounting.Views
 
         private void Users_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Раздел 'Пользователи' будет здесь", "Информация");
+            MainFrame.Navigate(new UsersPage(_dbContext));
         }
 
         private void Income_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Раздел 'Доходы' будет здесь", "Информация");
+            MainFrame.Navigate(new IncomePage(_dbContext));
         }
 
         private void Expenses_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Раздел 'Расходы' будет здесь", "Информация");
+            MainFrame.Navigate(new ExpensesPage(_dbContext));
         }
 
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Раздел 'Отчёты' будет здесь", "Информация");
+            MainFrame.Navigate(new ReportsPage(_dbContext));
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)

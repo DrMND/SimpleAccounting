@@ -1,6 +1,7 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using Microsoft.EntityFrameworkCore;
 using SimpleAccounting.Models;
+using System.Linq;
+using System.Windows;
 
 namespace SimpleAccounting.Views
 {
@@ -14,6 +15,9 @@ namespace SimpleAccounting.Views
 
             // Создаем контекст БД
             _dbContext = new AppDbContext();
+
+            // ЭТА СТРОКА СОЗДАЁТ/ОБНОВЛЯЕТ БАЗУ АВТОМАТИЧЕСКИ
+            _dbContext.Database.Migrate();
 
             // Создаем тестового пользователя (если таблица пустая)
             _dbContext.CreateTestUsers();
