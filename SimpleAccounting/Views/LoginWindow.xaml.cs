@@ -17,7 +17,7 @@ namespace SimpleAccounting.Views
             _dbContext = new AppDbContext();
 
             // ЭТА СТРОКА СОЗДАЁТ/ОБНОВЛЯЕТ БАЗУ АВТОМАТИЧЕСКИ
-            _dbContext.Database.Migrate();
+         
 
             // Создаем тестового пользователя (если таблица пустая)
             _dbContext.CreateTestUsers();

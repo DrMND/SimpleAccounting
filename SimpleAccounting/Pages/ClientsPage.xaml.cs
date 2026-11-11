@@ -62,11 +62,31 @@ namespace SimpleAccounting.Pages
         {
             if (ClientsGrid.SelectedItem is Client selected)
             {
-                var result = MessageBox.Show($"Удалить клиента '{selected.FullName}'?", "Подтверждение",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                // Сначала спрашиваем пользователя
+                var result = MessageBox.Show(
+                    $"Удалить клиента '{selected.FullName}'?",
+                    "Подтверждение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
+                    // Проверяем связи только после подтверждения
+                    int salesCount = _dbContext.Sales.Count(s => s.ClientId == selected.Id);
+
+                    if (salesCount > 0)
+                    {
+                        // Запрещаем удаление
+                        MessageBox.Show(
+                            $"Нельзя удалить клиента '{selected.FullName}', так как он участвует в {salesCount} продажах.\n\n" +
+                            "История продаж должна сохраняться неизменной.",
+                            "Ошибка удаления",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Если связей нет — удаляем
                     _dbContext.Clients.Remove(selected);
                     _dbContext.SaveChanges();
                     LoadClients();

@@ -4,8 +4,6 @@ using SimpleAccounting.Views;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.IO;
-using Microsoft.Win32;
 
 namespace SimpleAccounting.Views
 {

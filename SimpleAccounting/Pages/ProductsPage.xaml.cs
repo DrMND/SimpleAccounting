@@ -63,11 +63,31 @@ namespace SimpleAccounting.Pages
         {
             if (ProductsGrid.SelectedItem is Product selected)
             {
-                var result = MessageBox.Show($"Удалить товар '{selected.Name}'?", "Подтверждение",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                // Сначала спрашиваем пользователя
+                var result = MessageBox.Show(
+                    $"Удалить товар '{selected.Name}'?",
+                    "Подтверждение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
+                    // Проверяем связи только после подтверждения
+                    int salesCount = _dbContext.SaleItems.Count(si => si.ProductId == selected.Id);
+
+                    if (salesCount > 0)
+                    {
+                        // Запрещаем удаление
+                        MessageBox.Show(
+                            $"Нельзя удалить товар '{selected.Name}', так как он участвует в {salesCount} продажах.\n\n" +
+                            "История продаж должна сохраняться неизменной.",
+                            "Ошибка удаления",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                        return;
+                    }
+
+                    // Если связей нет — удаляем
                     _dbContext.Products.Remove(selected);
                     _dbContext.SaveChanges();
                     LoadProducts();

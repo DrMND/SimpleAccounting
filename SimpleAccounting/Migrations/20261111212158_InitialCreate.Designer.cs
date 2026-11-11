@@ -11,7 +11,7 @@ using SimpleAccounting.Models;
 namespace SimpleAccounting.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261111165416_InitialCreate")]
+    [Migration("20261111212158_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

@@ -139,7 +139,7 @@ namespace SimpleAccounting.Views
                 Price = selectedProduct.Price,
                 Sale = sale
             };
-
+            _dbContext.SaleItems.Add(saleItem);
             // Уменьшаем остаток товара
             selectedProduct.Quantity -= quantity;
 
