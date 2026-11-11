@@ -1,0 +1,26 @@
+﻿<Page x:Class="SimpleAccounting.Pages.WelcomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="WelcomePage">
+
+    <Grid Margin="30">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Добро пожаловать в систему учёта!" 
+                       FontSize="32" 
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,10"/>
+
+            <TextBlock x:Name="UserNameText" 
+                       FontSize="24" 
+                       Foreground="#7E57C2"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+            <TextBlock Text="Выберите раздел в меню слева" 
+                       FontSize="18" 
+                       Foreground="Gray"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Page>
