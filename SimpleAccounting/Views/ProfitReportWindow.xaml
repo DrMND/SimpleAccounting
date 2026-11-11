@@ -49,7 +49,7 @@
                         FontSize="14"/>
 
             <Button Content="📊 Сформировать" 
-                    Width="150" Height="35"
+                    Width="160" Height="35"
                     Click="GenerateReport_Click"/>
         </StackPanel>
 
@@ -83,7 +83,7 @@
                Margin="0,0,30,0"/>
 
             <Button Content="💾 Сохранить" 
-            Width="120" Height="35"
+            Width="140" Height="35"
             Click="SaveReport_Click"/>
         </StackPanel>
     </Grid>
