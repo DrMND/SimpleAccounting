@@ -13,13 +13,13 @@ namespace SimpleAccounting.Views
         {
             InitializeComponent();
 
-            // Создаем контекст БД
+            // Создаем контекст
             _dbContext = new AppDbContext();
 
-            // ЭТА СТРОКА СОЗДАЁТ/ОБНОВЛЯЕТ БАЗУ АВТОМАТИЧЕСКИ
-         
+            // ЭТА СТРОКА СОЗДАЕТ БАЗУ И ВСЕ ТАБЛИЦЫ, ЕСЛИ ИХ НЕТ
+            _dbContext.Database.EnsureCreated();
 
-            // Создаем тестового пользователя (если таблица пустая)
+            // Создаем тестовых пользователей
             _dbContext.CreateTestUsers();
         }
 
