@@ -1,1 +1,2 @@
 # SimpleAccounting
+Ненавижу бухгалтерию
