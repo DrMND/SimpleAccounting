@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
 using SimpleAccounting.Models;
 
 namespace SimpleAccounting.Views
@@ -21,20 +10,53 @@ namespace SimpleAccounting.Views
     public partial class AddSaleWindow : Window
     {
         private readonly AppDbContext _dbContext;
+        private readonly Sale? _existingSale;
+        private SaleItem? _existingSaleItem;
 
         public bool SaleSaved { get; private set; }
 
-        public AddSaleWindow(AppDbContext dbContext)
+        // Конструктор для новой продажи
+        public AddSaleWindow(AppDbContext dbContext) : this(dbContext, null)
+        {
+        }
+
+        // Конструктор для редактирования
+        public AddSaleWindow(AppDbContext dbContext, Sale? sale)
         {
             InitializeComponent();
             _dbContext = dbContext;
+            _existingSale = sale;
 
             // Загружаем клиентов и товары
             ClientComboBox.ItemsSource = _dbContext.Clients.ToList();
             ProductComboBox.ItemsSource = _dbContext.Products.ToList();
 
-            // По умолчанию — сегодняшняя дата
-            DatePicker.SelectedDate = System.DateTime.Now;
+            if (_existingSale != null)
+            {
+                // Режим редактирования
+                Title = "Редактирование продажи";
+                DatePicker.SelectedDate = _existingSale.Date;
+
+                // Выбираем клиента
+                ClientComboBox.SelectedItem = _dbContext.Clients.FirstOrDefault(c => c.Id == _existingSale.ClientId);
+
+                // Загружаем позицию продажи
+                _existingSaleItem = _dbContext.SaleItems.FirstOrDefault(si => si.SaleId == _existingSale.Id);
+
+                if (_existingSaleItem != null)
+                {
+                    // Выбираем товар
+                    ProductComboBox.SelectedItem = _dbContext.Products.FirstOrDefault(p => p.Id == _existingSaleItem.ProductId);
+                    QuantityTextBox.Text = _existingSaleItem.Quantity.ToString();
+                }
+
+                AmountTextBox.Text = _existingSale.TotalAmount.ToString();
+            }
+            else
+            {
+                // Режим создания
+                DatePicker.SelectedDate = System.DateTime.Now;
+            }
 
             // Подписываемся на изменения для автоподсчёта суммы
             ProductComboBox.SelectionChanged += ProductComboBox_SelectionChanged;
@@ -123,27 +145,67 @@ namespace SimpleAccounting.Views
                 return;
             }
 
-            // Создаём продажу
-            var sale = new Sale
+            if (_existingSale == null)
             {
-                Date = DatePicker.SelectedDate.Value,
-                ClientId = selectedClient.Id,
-                TotalAmount = amount
-            };
+                // Создаём новую продажу
+                var sale = new Sale
+                {
+                    Date = DatePicker.SelectedDate.Value,
+                    ClientId = selectedClient.Id,
+                    TotalAmount = amount
+                };
 
-            // Создаём позицию продажи
-            var saleItem = new SaleItem
+                var saleItem = new SaleItem
+                {
+                    ProductId = selectedProduct.Id,
+                    Quantity = quantity,
+                    Price = selectedProduct.Price,
+                    Sale = sale
+                };
+
+                // Уменьшаем остаток товара
+                selectedProduct.Quantity -= quantity;
+
+                _dbContext.Sales.Add(sale);
+            }
+            else
             {
-                ProductId = selectedProduct.Id,
-                Quantity = quantity,
-                Price = selectedProduct.Price,
-                Sale = sale
-            };
-            _dbContext.SaleItems.Add(saleItem);
-            // Уменьшаем остаток товара
-            selectedProduct.Quantity -= quantity;
+                // Редактируем существующую продажу
 
-            _dbContext.Sales.Add(sale);
+                // Если изменился товар или количество — корректируем остатки
+                if (_existingSaleItem != null)
+                {
+                    var oldProduct = _dbContext.Products.FirstOrDefault(p => p.Id == _existingSaleItem.ProductId);
+
+                    if (oldProduct != null && oldProduct.Id != selectedProduct.Id)
+                    {
+                        // Товар изменился — возвращаем старый остаток
+                        oldProduct.Quantity += _existingSaleItem.Quantity;
+                    }
+                    else if (oldProduct != null)
+                    {
+                        // Тот же товар — возвращаем старое количество
+                        oldProduct.Quantity += _existingSaleItem.Quantity;
+                    }
+                }
+
+                // Обновляем продажу
+                _existingSale.Date = DatePicker.SelectedDate.Value;
+                _existingSale.ClientId = selectedClient.Id;
+                _existingSale.TotalAmount = amount;
+
+                // Обновляем позицию
+                if (_existingSaleItem != null)
+                {
+                    _existingSaleItem.ProductId = selectedProduct.Id;
+                    _existingSaleItem.Quantity = quantity;
+                    _existingSaleItem.Price = selectedProduct.Price;
+                }
+
+                // Уменьшаем новый остаток
+                selectedProduct.Quantity -= quantity;
+            }
+
             _dbContext.SaveChanges();
 
             SaleSaved = true;

@@ -23,6 +23,11 @@
                     Margin="0,0,10,0"
                     Click="AddSale_Click"/>
 
+            <Button Content="✏️ Редактировать" 
+                    Width="160" Height="35"
+                    Margin="0,0,10,0"
+                    Click="EditSale_Click"/>
+
             <Button Content="🗑️ Удалить" 
                     Width="120" Height="35"
                     Click="DeleteSale_Click"/>

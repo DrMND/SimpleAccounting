@@ -38,6 +38,25 @@ namespace SimpleAccounting.Pages
                     MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+        private void EditSale_Click(object sender, RoutedEventArgs e)
+        {
+            if (SalesGrid.SelectedItem is Sale selected)
+            {
+                var dialog = new AddSaleWindow(_dbContext, selected);
+
+                if (dialog.ShowDialog() == true || dialog.SaleSaved)
+                {
+                    LoadSales();
+                    MessageBox.Show("Продажа успешно обновлена!", "Успех",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите продажу для редактирования", "Предупреждение",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
 
         private void DeleteSale_Click(object sender, RoutedEventArgs e)
         {
